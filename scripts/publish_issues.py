@@ -26,7 +26,7 @@ def get_issues():
 
     while True:
         url = API + "?" + urllib.parse.urlencode({
-            "state": "all",
+            "state": "open",
             "per_page": 100,
             "page": page
         })
@@ -226,6 +226,15 @@ def update_homepage(articles):
 def main():
     issues = get_issues()
 
+    active_files = {
+        f"issue-{issue['number']}.html"
+        for issue in issues
+    }
+
+    for file in ARTICLES_DIR.glob("issue-*.html"):
+        if file.name not in active_files:
+            file.unlink()
+            print(f"Removed closed article: {file.name}")
     issues.sort(
         key=lambda x: x.get("created_at", ""),
         reverse=True
