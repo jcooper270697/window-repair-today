@@ -2,7 +2,7 @@ name: Publish Issues to GitHub Pages
 
 on:
   issues:
-    types: [opened, edited, reopened]
+    types: [opened, edited, reopened, closed]
   workflow_dispatch:
   schedule:
     - cron: "*/30 * * * *"
